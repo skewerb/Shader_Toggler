@@ -13,9 +13,13 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
+#include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QSlider>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
@@ -26,9 +30,13 @@ class Ui_MainWindow
 {
 public:
     QWidget *centralWidget;
+    QGraphicsView *graphicsView;
+    QSlider *horizontalSlider;
+    QLabel *label;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QMenuBar *menuBar;
+    QMenu *menuShader_Toggler;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -37,6 +45,16 @@ public:
         MainWindow->resize(400, 300);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
+        graphicsView = new QGraphicsView(centralWidget);
+        graphicsView->setObjectName(QStringLiteral("graphicsView"));
+        graphicsView->setGeometry(QRect(70, 30, 256, 192));
+        horizontalSlider = new QSlider(centralWidget);
+        horizontalSlider->setObjectName(QStringLiteral("horizontalSlider"));
+        horizontalSlider->setGeometry(QRect(120, 230, 160, 22));
+        horizontalSlider->setOrientation(Qt::Horizontal);
+        label = new QLabel(centralWidget);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(150, 10, 81, 16));
         MainWindow->setCentralWidget(centralWidget);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -47,7 +65,11 @@ public:
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
         menuBar->setGeometry(QRect(0, 0, 400, 22));
+        menuShader_Toggler = new QMenu(menuBar);
+        menuShader_Toggler->setObjectName(QStringLiteral("menuShader_Toggler"));
         MainWindow->setMenuBar(menuBar);
+
+        menuBar->addAction(menuShader_Toggler->menuAction());
 
         retranslateUi(MainWindow);
 
@@ -57,6 +79,8 @@ public:
     void retranslateUi(QMainWindow *MainWindow)
     {
         MainWindow->setWindowTitle(QApplication::translate("MainWindow", "MainWindow", 0));
+        label->setText(QApplication::translate("MainWindow", "Toggle This!", 0));
+        menuShader_Toggler->setTitle(QApplication::translate("MainWindow", "Shader Toggler", 0));
     } // retranslateUi
 
 };
